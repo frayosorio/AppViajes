@@ -2,19 +2,26 @@
     <h1>Filtros</h1>
     <div *ngFor="let filtro of filtros">
         <mat-form-field appearance="fill">
-            <mat-label>{{columnas[filtro.numeroColumna]}}</mat-label>
+            <mat-label>{{filtro.columnaFiltro}}</mat-label>
             <mat-select [(value)]="filtro.opcionSeleccionada">
                 <mat-option *ngFor="let opcion of filtro.opciones" [value]="opcion">
                     {{opcion}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <button mat-raised-button color="primary" (click)="quitarFiltro(filtro)">Quitar Filtro</button>
     </div>
+    <button *ngIf="!filtrado; else elseBlock" mat-raised-button color="primary" (click)="filtrar()">
+        Filtrar
+    </button>
+    <ng-template #elseBlock>
+        <button mat-raised-button color="primary" (click)="desfiltrar()">Desfiltrar</button>
+      </ng-template>
 </div>
 <mat-form-field appearance="fill">
     <mat-label>Columna</mat-label>
     <mat-select [(value)]="columnaFiltro">
-        <mat-option *ngFor="let columna of columnas; let i = index" [value]="i">
+        <mat-option *ngFor="let columna of columnas" [value]="columna">
             {{columna}}
         </mat-option>
     </mat-select>

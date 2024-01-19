@@ -1,0 +1,41 @@
+<div>
+    <h1>Filtros</h1>
+    <div *ngFor="let filtro of filtros">
+        <mat-form-field appearance="fill">
+            <mat-label>{{columnas[filtro.numeroColumna]}}</mat-label>
+            <mat-select [(value)]="filtro.opcionSeleccionada">
+                <mat-option *ngFor="let opcion of filtro.opciones" [value]="opcion">
+                    {{opcion}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<mat-form-field appearance="fill">
+    <mat-label>Columna</mat-label>
+    <mat-select [(value)]="columnaFiltro">
+        <mat-option *ngFor="let columna of columnas; let i = index" [value]="i">
+            {{columna}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="agregarFiltro()">Agregar Filtro</button>
+<table>
+    <thead>
+        <tr>
+            <th *ngFor="let columna of columnas">{{ columna }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of datos">
+            <td *ngFor="let columna of columnas">
+                <ng-container *ngIf="!columna.includes('.')">
+                    {{ item[columna] }}
+                </ng-container>
+                <ng-container *ngIf="columna.includes('.')">
+                    {{ item[columna.split('.')[0]][columna.split('.')[1]] }}
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</table>
